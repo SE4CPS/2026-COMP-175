@@ -1,0 +1,10 @@
+Library Catalog: Circulation Desk Reference
+=============================================
+
+Title                          Author              Call Number
+-----                          ------              -----------
+The Pragmatic Programmer       Hunt & Thomas       QA76.6 .H85
+Operating Systems Concepts     Silberschatz        QA76.76.O63
+The Mythical Man-Month         Brooks              QA76.6 .B75
+Clean Code                     Martin              QA76.6 .M3675
+Unix Network Programming       Stevens             QA76.76.I58 S74

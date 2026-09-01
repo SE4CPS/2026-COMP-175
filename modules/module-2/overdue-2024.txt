@@ -1,0 +1,7 @@
+Overdue Notices (2024, archived)
+==================================
+
+Patron     Title                       Due Date
+------     -----                       --------
+dwong      The Pragmatic Programmer    2024-11-02
+plopez     Clean Code                  2024-11-15

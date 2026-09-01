@@ -1,0 +1,9 @@
+Patron Records
+===============
+
+ID      Name           Email                    Status
+--      ----           -----                    ------
+1001    Jane Smith     jsmith@pacific.edu       Active
+1002    Miguel Garcia  mgarcia@pacific.edu      Active
+1003    Aisha Khan     akhan@pacific.edu        Active
+1004    Sam Rivera      srivera@pacific.edu      Suspended
