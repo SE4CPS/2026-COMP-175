@@ -27,7 +27,12 @@ cd 2026-COMP-175/modules/module-2
 | `backup.sh`        | Practice: Lock Down backup.sh (`chmod 700`)  |
 | `overdue-2024.txt` | Practice: Archive Old Records (`mv`)         |
 | `archive/`         | Destination for the archive task and backups |
+| `.passwords/passwords.txt` | Hidden-file discovery: `ls -a`, `find` |
+| `passwords/passwords.txt`  | Same file, visible folder -- compare permissions on each |
 
 Nothing here has been `chmod`'d yet -- that's the point of Module 2's
 own permissions practice slides. Run `git pull` from
 `2026-COMP-175/` any time to pick up updates to these files.
+
+**All credentials in `passwords/` and `.passwords/` are fake**, made up
+for permissions practice -- they are not real accounts.
