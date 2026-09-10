@@ -21,6 +21,21 @@ cd 2026-COMP-175/modules/module-3
 
 Run `git pull` from `~/2026-COMP-175` any time to pick up updates.
 
+## What you just cloned (module-3 folder)
+
+Every file below is real and already written. You do not edit them &mdash;
+you *deploy* them and prove they run.
+
+| File | What it is | Run it with | What you should see |
+|---|---|---|---|
+| `catalog-scripts/add_book.py` | Appends one book (`title\|author\|isbn\|year`) to `catalog.txt` in the current directory. Creates nothing; the file must already exist. | `python3 add_book.py "Title" "Author" 9780321919168 2016` | `Added 'Title' (ISBN 9780321919168) to catalog.txt`, and one new line in `catalog.txt` |
+| `catalog-scripts/lookup_by_isbn.py` | Reads `catalog.txt` and prints the line whose ISBN (3rd field) matches. | `python3 lookup_by_isbn.py 9780321919168` | the matching `title\|author\|isbn\|year` line, or `No book found with ISBN ...` |
+| `catalog-scripts/overdue_report.py` | Reads `checkout.txt` (`patron\|isbn\|due_date\|returned`) and prints every item not returned whose due date is in the past. | `python3 overdue_report.py` | one `patron: ISBN ... was due YYYY-MM-DD` line per overdue item (nothing if none, or a "not found" note if `checkout.txt` is missing) |
+| `catalog-scripts/README.md` | Notes on the three scripts and their file formats. | `cat catalog-scripts/README.md` | the table above, in more detail |
+| `dotfiles/.bashrc` | A login-banner block: on every new interactive shell it prints your identity, your groups, the root filesystem type, and free space on `/` and `/srv`. Built only from `id`, `groups`, `mount`, `df`. | append to `~/.bashrc`, then `source ~/.bashrc` (see step 4) | a boxed banner with your `id`, your `groups`, `Root filesystem type: ext4`, and a `df -h` table |
+| `class-project/verify.sh` | The self-check for this project. Inspects `/srv/library` and its three role folders, the deployed scripts, your `libstaff` membership, and the banner in `~/.bashrc`. | `bash verify.sh` | one `PASS`/`FAIL` line per check, a count, and a final verdict (see step 6) |
+| `class-project/README.md` | This file. | `cat class-project/README.md` | these instructions |
+
 ## 1. Build `/srv/library` (the shared collection)
 
 Recreate the Phase 1 + Phase 2 end state:
@@ -91,7 +106,50 @@ found and fixed it:
 bash ~/2026-COMP-175/modules/module-3/class-project/verify.sh
 ```
 
-Every line should read `PASS`. Fix anything that says `FAIL` and run it again.
+`verify.sh` prints **one line per check**: `PASS` if that piece of the
+build is correct, or `FAIL` with the expected vs. actual value so you know
+what to fix. It ends with a count and a verdict, and its exit code is `0`
+only when every check passed.
+
+**A finished build looks exactly like this** (16 checks, all green):
+
+```
+=== Module 3 class project: verify ===
+
+PASS  /srv/library exists
+PASS  /srv/library is drwxrws--T libstaff
+PASS  /srv/library/cataloging exists
+PASS  /srv/library/cataloging is drwxrws--T libstaff
+PASS  /srv/library/circulation exists
+PASS  /srv/library/circulation is drwxrws--T libstaff
+PASS  /srv/library/archives exists
+PASS  /srv/library/archives is drwxrws--T libstaff
+PASS  /srv/library/cataloging/add_book.py deployed
+PASS  add_book.py group is libstaff
+PASS  /srv/library/cataloging/lookup_by_isbn.py deployed
+PASS  lookup_by_isbn.py group is libstaff
+PASS  /srv/library/cataloging/overdue_report.py deployed
+PASS  overdue_report.py group is libstaff
+PASS  your login is in the libstaff group
+PASS  welcome banner is in ~/.bashrc
+
+-------------------------------------------------------------
+16 passed, 0 failed
+All checks passed.
+```
+
+A `FAIL` looks like this &mdash; the fix is always in the two lines under it:
+
+```
+FAIL  /srv/library is drwxrws--T libstaff
+        expected: drwxrws--T libstaff
+        got:      drwxrwx--- root
+```
+
+That one means the group is still `root` and setgid + sticky are not set:
+`sudo chgrp libstaff /srv/library && sudo chmod 3770 /srv/library`. Fix
+each `FAIL`, run `verify.sh` again, and stop when the last line reads
+`All checks passed.`
 
 ## What to submit (Canvas)
 
