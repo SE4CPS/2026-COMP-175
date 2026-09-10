@@ -1,6 +1,6 @@
 # Module 3 Class Project: Stand Up the Library File Share
 
-This is **Phase 3** of the Module 3 practice lab. Phases 1 and 2 walked you
+This is **Phase 4** of the Module 3 practice lab. Phases 1, 2 and 3 walked you
 through the pieces on the slides; here you build the whole thing on your own
 Ubuntu VM, deploy the real files from this repo, and hand in an audit that
 proves it works.
