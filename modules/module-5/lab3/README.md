@@ -24,9 +24,9 @@ scripts, the sudoers file and SSH drop-in you create in Q6 and Q9) so you can st
 | Item | Detail |
 |---|---|
 | Accounts | three lab accounts you must find yourself: two in group `registrars`, one in group `auditors` (see Q1) |
-| `/srv/registrar/grades.csv` | owner `jokafor`, group `registrars`, mode 640 |
+| `/srv/registrar/grades.csv` | owner is the lead account, group `registrars`, mode 640 |
 | `/srv/registrar/archive/` | six files, three of them older than 180 days (one in `2024/`) |
-| `/srv/registrar/reports/` | `mreyes`'s folder, with `summary.txt` |
+| `/srv/registrar/reports/` | the clerk account's folder, with `summary.txt` |
 | `/srv/registrar/shared/`, `dropbox/` | plain modes on purpose; Q4 hardens them |
 | `/srv/registrar/public/index.html` | the page you reach through a tunnel in Q10 |
 | `/usr/local/bin/backup-grades.sh` | needs root; Q6 lets one group run it with sudo |
