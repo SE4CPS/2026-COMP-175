@@ -23,7 +23,7 @@ scripts, the sudoers file and SSH drop-in you create in Q6 and Q9) so you can st
 
 | Item | Detail |
 |---|---|
-| Accounts | `mreyes` and `jokafor` (group `registrars`), `tnguyen` (group `auditors`) |
+| Accounts | three lab accounts you must find yourself: two in group `registrars`, one in group `auditors` (see Q1) |
 | `/srv/registrar/grades.csv` | owner `jokafor`, group `registrars`, mode 640 |
 | `/srv/registrar/archive/` | six files, three of them older than 180 days (one in `2024/`) |
 | `/srv/registrar/reports/` | `mreyes`'s folder, with `summary.txt` |

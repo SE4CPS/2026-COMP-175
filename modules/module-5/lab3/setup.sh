@@ -93,7 +93,7 @@ systemctl enable --now ssh >/dev/null 2>&1 || echo "   (could not start ssh here
 
 echo
 echo "SETUP OK"
-echo "  accounts : mreyes, jokafor (registrars)   tnguyen (auditors)"
+echo "  accounts : 3 lab accounts (find them: getent group registrars auditors)"
 echo "  tree     : $ROOT"
 echo "  scripts  : /usr/local/bin/backup-grades.sh   /opt/registrar/report-job.sh"
 echo "  Ubuntu IP: $(hostname -I | awk '{print $1}')"
