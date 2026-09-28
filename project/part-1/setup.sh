@@ -29,6 +29,19 @@ chown -R contractor:contractor /home/contractor/.ssh
 chmod 700 /home/contractor/.ssh
 chmod 600 /home/contractor/.ssh/authorized_keys
 
+# ---- second account: a forgotten intern login, password auth still on ----
+if ! id intern >/dev/null 2>&1; then
+  useradd -m -s /bin/bash intern
+fi
+echo "intern:Summer2026!" | chpasswd
+# guarantee password auth is actually reachable regardless of the base
+# image's own defaults -- a low-numbered drop-in wins over any later one
+mkdir -p /etc/ssh/sshd_config.d
+cat > /etc/ssh/sshd_config.d/00-project-part1.conf <<'SSHD'
+PasswordAuthentication yes
+SSHD
+systemctl reload ssh 2>/dev/null || service ssh reload 2>/dev/null || true
+
 # ---- records directory ----
 mkdir -p /srv/hospital-records
 cat > /srv/hospital-records/patients.csv <<'CSV'
@@ -61,6 +74,47 @@ echo "Backup complete."
 SCRIPT
 chown root:svc-backup /opt/hospital/backup.sh
 chmod 775 /opt/hospital/backup.sh
+
+# produce one archive now, so it's there to find without waiting, and
+# lock its permissions explicitly (never rely on the umask default)
+bash /opt/hospital/backup.sh >/dev/null
+chmod 755 /var/backups/hospital
+chmod 644 /var/backups/hospital/*.tar.gz
+
+# ---- second script: a records-sync job on a timer, same mistake again ----
+cat > /opt/hospital/sync.sh <<'SCRIPT'
+#!/usr/bin/env bash
+# Keeps a small sync log up to date. Runs on a timer, not via sudo.
+echo "$(date -Is) sync ok" >> /var/log/hospital-sync.log
+SCRIPT
+touch /var/log/hospital-sync.log
+chown root:svc-backup /opt/hospital/sync.sh /var/log/hospital-sync.log
+chmod 775 /opt/hospital/sync.sh
+chmod 664 /var/log/hospital-sync.log
+
+cat > /etc/systemd/system/hospital-sync.service <<'UNIT'
+[Unit]
+Description=Hospital records sync job
+
+[Service]
+Type=oneshot
+ExecStart=/opt/hospital/sync.sh
+UNIT
+
+cat > /etc/systemd/system/hospital-sync.timer <<'TIMER'
+[Unit]
+Description=Run hospital-sync every 2 minutes
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=2min
+
+[Install]
+WantedBy=timers.target
+TIMER
+
+systemctl daemon-reload
+systemctl enable --now hospital-sync.timer >/dev/null 2>&1
 
 # ---- sudoers entry the contractor set up for the backup job ----
 cat > /etc/sudoers.d/hospital-backup <<'SUDOERS'

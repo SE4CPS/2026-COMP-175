@@ -7,22 +7,36 @@ medical condition, diagnosis, or allergy -- only generic record IDs, room number
 ## What's here
 
 - `setup.sh` -- run on the **`hospital-records` (Ubuntu)** VM as a sudo-capable user
-  (`sudo bash setup.sh`). Creates the `contractor` account, the `/srv/hospital-records/` data
-  directory, a backup script under `/opt/hospital/`, and a few other pieces left behind by a previous
-  IT contractor. Re-running it resets the scenario.
+  (`sudo bash setup.sh`). Creates two accounts, the `/srv/hospital-records/` data directory, a backup
+  job, a sync job, and a few other pieces left behind by a previous IT contractor. Re-running it resets
+  the scenario.
 - `cleanup.sh` -- reverses `setup.sh`, if you need to start over.
 - `keys/contractor_id_ed25519` / `.pub` -- an SSH keypair the contractor left behind. This is a
   **real, working keypair checked into this repo on purpose** -- part of the assignment is deciding
   what that means and what you'd do about it.
-- `files/` -- copies of the sample data files `setup.sh` installs, for reference.
+- `files/` -- copies of the sample data and notes `setup.sh` installs, for reference.
 
 ## Using it
 
 1. On `hospital-records`, clone this repo and run `setup.sh` as instructed in the assignment.
-2. Read the script before you run it. Note anything that looks unusual.
+2. Read the script, and everything in this repo, before you run it. Note anything that looks unusual.
 3. Once setup finishes, **snapshot the VM** (name it `post-clone-vulnerable`) before you do any of your
    own hardening work -- you'll need that snapshot later in the assignment.
 4. Follow the rest of the assignment (Canvas / the course deck) from there.
+
+## How many things need fixing
+
+**There are 6 distinct, verified vulnerabilities** in this environment -- some planted in the data in
+this repo, some created by the setup script's own configuration choices. You do not need to find all 6
+to do well on the assessment (a thorough, well-documented pass at what you did find is the real grading
+target), but full credit on the audit expects all 6 identified and fixed. They fall into two families:
+
+- **Getting in without permission:** ways to reach data or an account you shouldn't have, without needing
+  to escalate to root.
+- **Getting to root:** ways a low-privilege account can end up running something as root.
+
+No further hints here -- that's the assessment. Use Modules 1-6 and the free-tier AI tool the assignment
+describes to work through it systematically.
 
 ## Rules of engagement
 
