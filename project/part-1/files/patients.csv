@@ -1,0 +1,6 @@
+record_id,room,admit_date,status
+H-1001,204,2026-09-02,active
+H-1002,211,2026-09-05,active
+H-1003,118,2026-09-10,discharged
+H-1004,305,2026-09-14,active
+H-1005,102,2026-09-16,active

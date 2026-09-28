@@ -1,3 +1,9 @@
 *.sh text eol=lf
 .bashrc text eol=lf
 .bash_profile text eol=lf
+
+# Project Part 1 (COMP-175): the SSH key is byte-sensitive, never let it
+# be CRLF-converted. Sample data/text files stay LF for consistency.
+project/part-1/keys/* -text
+project/part-1/README.md text eol=lf
+project/part-1/files/* text eol=lf
