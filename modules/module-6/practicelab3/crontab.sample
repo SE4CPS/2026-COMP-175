@@ -1,0 +1,8 @@
+# Medical-unit server: scheduled jobs (Module 6, Practice Lab 3)
+# Install with:
+#   (crontab -l 2>/dev/null; sed "s|SCRIPTDIR|$(pwd)|" crontab.sample) | crontab -
+# m h  dom mon dow   command
+0  7   *   *   *     SCRIPTDIR/appointment-reminders.sh
+30 8   *   *   1-5   SCRIPTDIR/equipment-check.sh
+0  20  *   *   *     SCRIPTDIR/shift-handoff-report.sh
+0  2   *   *   *     SCRIPTDIR/nightly-backup.sh
