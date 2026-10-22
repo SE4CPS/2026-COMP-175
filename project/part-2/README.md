@@ -12,7 +12,7 @@ should start from a different copy or a blank box.
 configures the real per-persona RBAC on top of that shared baseline
 (narrower read/write rules for nurses vs. physicians vs. patients).
 
-All seed data will be entirely synthetic — fake names, fake record
+All seed data will be entirely synthetic: fake names, fake record
 numbers, no real patient information. Same convention as this
 repo's Module 4 medical-records lab.
 
@@ -21,11 +21,18 @@ repo's Module 4 medical-records lab.
 Each team pushes its own Kali-side dashboard code and role scripts
 to its own folder:
 
-- `team1/` — Monitor Read
-- `team2/` — Monitor Write
-- `team3/` — Attacker
-- `team4/` — Clinical Data & Access Control
-- `team5/` — Clinical Web Interface
+- `team1/`: Monitor Read (Joshua, Eivan)
+- `team2/`: Monitor Write (Anh, Andy, Andrew)
+- `team3/`: Attacker (Charlie, Angadpaul, Joe)
+- `team4/`: Clinical Data & Access Control (Toan)
+- `team5/`: Clinical Web Interface (Gionni)
+
+## Discord
+
+Join the class server: https://discord.gg/2wuVZu6Fm
+
+Use your own team's channel for day-to-day coordination:
+questions, blockers, status-update drafts.
 
 See the Project Part 2 description (shared separately) for the full
 assignment brief.
