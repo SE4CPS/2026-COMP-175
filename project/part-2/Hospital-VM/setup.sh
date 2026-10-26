@@ -1,6 +1,6 @@
 #!/bin/bash
-# Project Part 2: ER Hospital System -- shared clinical-data seed.
-# Run on each team's Ubuntu VM so every VM starts identical.
+# Project Part 2: ER Hospital System -- shared Hospital-VM baseline.
+# Run on EVERY team's Ubuntu VM so every VM starts identical.
 # Synthetic data only. No real PHI. Safe to re-run.
 set -e
 
@@ -17,17 +17,29 @@ sudo usermod -aG guests guest1
 sudo usermod -aG nurses nurse1
 sudo usermod -aG physicians physician1
 sudo usermod -aG patients patient1
+echo "patient1:Patient123!" | sudo chpasswd
 
 sudo mkdir -p /srv/clinical-data
 sudo cp -r "$(dirname "$0")/sample-data/." /srv/clinical-data/
 sudo chown -R root:root /srv/clinical-data
 sudo chmod 755 /srv/clinical-data
 sudo chmod 644 /srv/clinical-data/*
+sudo cp /srv/clinical-data/patients.csv /srv/clinical-data/.patients.csv.bak
+sudo chmod 644 /srv/clinical-data/.patients.csv.bak
+
+sudo mkdir -p /opt/hospital-vm
+sudo tee /opt/hospital-vm/legacy-notify.sh > /dev/null <<'EOF'
+#!/bin/bash
+# TODO: retire, replaced by new notification pipeline
+# patient1 / Patient123!
+echo "legacy notify: disabled"
+EOF
+sudo chmod 644 /opt/hospital-vm/legacy-notify.sh
 
 echo "SETUP OK"
 echo "Groups:   guests nurses physicians patients"
 echo "Accounts: guest1 nurse1 physician1 patient1"
-echo "Data:     /srv/clinical-data (world-readable baseline, not secure yet)"
+echo "Data:     /srv/clinical-data (starting baseline, not secured yet)"
 echo ""
 echo "This is a shared starting point, not the final RBAC config."
 echo "Clinical Data & Access Control narrows real per-persona rules"

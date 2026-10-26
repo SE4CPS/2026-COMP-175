@@ -1,31 +1,27 @@
 # Project Part 2: ER Hospital System
 
-## Shared clinical-data seed
+## Shared clinical-data seed: Hospital-VM/
 
-Run `setup.sh` on your **Ubuntu** VM so every Ubuntu VM starts from
-the same identical baseline: the same synthetic clinical data, the
-same 4 persona accounts (`guest1`, `nurse1`, `physician1`,
+Run `Hospital-VM/setup.sh` on your **Ubuntu** VM so every Ubuntu VM
+starts from the same identical baseline: the same synthetic clinical
+data, the same 4 persona accounts (`guest1`, `nurse1`, `physician1`,
 `patient1`). No team should start from a different copy or a blank
-box.
+box. See `Hospital-VM/README.md` for setup and the optional activity
+simulator.
 
 ```
 sudo apt install -y git
 git clone https://github.com/SE4CPS/2026-COMP-175.git
-cd 2026-COMP-175/project/part-2
+cd 2026-COMP-175/project/part-2/Hospital-VM
 chmod +x setup.sh
 ./setup.sh
 ```
-
-Seeds `/srv/clinical-data` from `sample-data/` and prints `SETUP OK`
-when done. Safe to re-run if you need to reset back to the starting
-state. The data starts world-readable on purpose: Team 4 tightens
-the real permissions on top of this shared baseline.
 
 **Clinical Data & Access Control** is the team that then actually
 configures the real per-persona RBAC on top of that shared baseline
 (narrower read/write rules for nurses vs. physicians vs. patients).
 
-All seed data will be entirely synthetic: fake names, fake record
+All seed data is entirely synthetic: fake names, fake record
 numbers, no real patient information. Same convention as this
 repo's Module 4 medical-records lab.
 
@@ -47,5 +43,4 @@ Join the class server: https://discord.gg/2wuVZu6Fm
 Use your own team's channel for day-to-day coordination:
 questions, blockers, status-update drafts.
 
-See the Project Part 2 description (shared separately) for the full
-assignment brief.
+See the Project Part 2 description for the full assignment brief.
