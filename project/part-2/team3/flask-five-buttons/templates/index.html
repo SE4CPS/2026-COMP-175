@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flask Button Panel</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='panel.js') }}" defer></script>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Flask starter</p>
+    <h1>Button Panel</h1>
+    <p>Each button runs a Python function. Edit <code>actions.py</code> to make it your own.</p>
+    <section class="buttons" aria-label="Actions">
+      {% for button_id, (label, action) in buttons.items() %}
+        <button type="button" data-url="{{ url_for('run_action', button_id=button_id) }}">
+          {{ label }}
+        </button>
+      {% endfor %}
+    </section>
+    <section class="output" aria-labelledby="output-heading">
+      <h2 id="output-heading">Result</h2>
+      <p id="result" role="status">Select a button to run its action.</p>
+    </section>
+  </main>
+</body>
+</html>
