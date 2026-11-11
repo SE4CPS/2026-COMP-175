@@ -1,0 +1,38 @@
+Team 5 - dashboard navigation repair
+Date: 2026-11-05
+Scope: own isolated Kali (192.168.56.11) and Ubuntu (192.168.56.10) component VMs.
+
+Original failure: a direct browser GET of /action returned HTTP 405.
+Fix: GET /action redirects to / and executes no command. Commands still require authenticated POST requests and a valid form token.
+
+Automated checks on Kali:
+test_action_link_opens_dashboard_without_running_command (test_app.DashboardTests.test_action_link_opens_dashboard_without_running_command) ... ok
+test_bad_filename_cannot_reach_ssh (test_app.DashboardTests.test_bad_filename_cannot_reach_ssh) ... ok
+test_operator_cannot_read_records (test_app.DashboardTests.test_operator_cannot_read_records) ... ok
+test_persona_cannot_manage_app (test_app.DashboardTests.test_persona_cannot_manage_app) ... ok
+test_post_requires_persona_and_csrf (test_app.DashboardTests.test_post_requires_persona_and_csrf) ... ok
+test_real_ssh_failure_is_shown (test_app.DashboardTests.test_real_ssh_failure_is_shown) ... ok
+test_record_success_is_actual_subprocess_output (test_app.DashboardTests.test_record_success_is_actual_subprocess_output) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.688s
+
+OK
+active
+
+Live HTTP checks on Kali:
+PASS: GET /action?action=restart returns 302 to /
+PASS: opening the saved /action address loads the home page
+PASS: real Ubuntu identity -> exit 0
+PASS: real Ubuntu list -> exit 0
+PASS: real Ubuntu read patients.csv -> exit 0
+PASS: real Ubuntu read restricted.txt -> exit 1
+PASS: POST without a form token remains denied with HTTP 403
+All live navigation and read checks passed; no clinical data was modified.
+
+Chrome verification from the host:
+- Opened http://192.168.56.11:5000/action and reached http://192.168.56.11:5000/.
+- Read patients.csv as guest1: EXIT 0 with real Ubuntu output.
+- Read restricted.txt as guest1: EXIT 1 with Permission denied.
+- Left the working home page open for the demo.
+
