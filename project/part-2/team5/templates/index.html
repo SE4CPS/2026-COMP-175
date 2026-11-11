@@ -1,1 +1,15 @@
-
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clinical Web Interface</title><link rel="stylesheet" href="/static/style.css"></head><body>
+<main><header><p class="eyebrow">COMP 175 · TEAM 5</p><h1>Clinical records</h1><p class="sub">Live access checks against the Ubuntu server</p></header>
+{% if not persona %}<section><h2>Log in</h2><form action="/login" method="post"><label>Role<select name="persona" required><option value="guest1">Guest</option><option value="nurse1">Nurse</option><option value="physician1">Physician</option><option value="patient1">Patient</option><option value="operator">Team 5 operator</option></select></label><label>Password<input name="password" type="password" required autocomplete="current-password"></label><button>Log in</button></form></section>
+{% else %}<section class="identity"><div><span class="eyebrow">CURRENT ROLE</span><h2>{{ persona }}</h2></div><form method="post" action="/logout"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="quiet">Log out</button></form></section>
+<section><h2>Real commands</h2><p>Each button runs a command and displays its actual output or failure. Ubuntu decides record access through Linux permissions.</p><div class="actions">
+{% if persona != 'operator' %}
+<form method="post" action="/action"><input type="hidden" name="csrf" value="{{ csrf }}"><button name="action" value="identity">1 · Verify identity</button></form>
+<form method="post" action="/action"><input type="hidden" name="csrf" value="{{ csrf }}"><button name="action" value="list">2 · List records</button></form>
+<form method="post" action="/action" class="read"><input type="hidden" name="csrf" value="{{ csrf }}"><label>Record filename<input name="filename" value="patients.csv" required pattern="[A-Za-z0-9][A-Za-z0-9_.-]{0,79}"></label><button name="action" value="read">3 · Read record</button></form>
+{% else %}
+<form method="post" action="/action"><input type="hidden" name="csrf" value="{{ csrf }}"><button name="action" value="deploy">4 · Deploy app</button></form>
+<form method="post" action="/action"><input type="hidden" name="csrf" value="{{ csrf }}"><button name="action" value="restart">5 · Restart app</button></form>
+{% endif %}</div></section>{% endif %}
+{% if result %}<section class="output"><div class="result-title"><h2>Command result: {{ result.action or 'login' }}</h2><span class="status {{ 'ok' if result.code == 0 else 'failed' }}">{{ 'EXIT 0' if result.code == 0 else 'EXIT ' ~ result.code }}</span></div>{% if result.stdout %}<h3>Standard output</h3><pre>{{ result.stdout }}</pre>{% endif %}{% if result.stderr %}<h3>Standard error</h3><pre>{{ result.stderr }}</pre>{% endif %}</section>{% endif %}
+<footer>Synthetic data · Team 5 web interface · Read-only record access</footer></main></body></html>
