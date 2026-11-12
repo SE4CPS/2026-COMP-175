@@ -1,0 +1,16 @@
+# ER Hospital System — Project Part 2 shared hosts file
+# Maintained by Team 1 (Monitor Read)
+# STATUS: DRAFT — based on the project brief's stated IP convention
+# (10.0.0.1x = Laptop 1, 10.0.0.2x = Laptop 2, etc.; .x0 = Ubuntu, .x1 = Kali).
+# Assumes Team N = Laptop N. Not yet confirmed by Teams 2-5 — update once they reply.
+
+10.0.0.10   monread-ubuntu      monitor-read-ubuntu
+10.0.0.11   monread-kali        monitor-read-kali
+10.0.0.20   monwrite-ubuntu     monitor-write-ubuntu
+10.0.0.21   monwrite-kali       monitor-write-kali
+10.0.0.30   attacker-ubuntu
+10.0.0.31   attacker-kali
+10.0.0.40   clindata-ubuntu     clindata-vm
+10.0.0.41   clindata-kali
+10.0.0.50   webui-ubuntu
+10.0.0.51   webui-kali
